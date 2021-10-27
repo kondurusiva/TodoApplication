@@ -108,6 +108,55 @@ app.post("/todos/", async (request, response) => {
 });
 
 //API 4
-app.put("/todos/:todoId/", (request, response) => {
-  const { status, priority, todo } = request.query;
+app.put("/todos/:todoId/", async (request, response) => {
+  const { todoId } = request.params;
+  let updateColumn = "";
+  const requestBody = request.body;
+  switch (true) {
+    case requestBody.status !== undefined:
+      updateColumn = "Status";
+      break;
+    case requestBody.priority !== undefined:
+      updateColumn = "Priority";
+      break;
+    case requestBody.todo !== undefined:
+      updateColumn = "TO DO";
+      break;
+  }
+  const BeforeQuery = `
+  SELECT *
+  FROM
+    todo
+  WHERE 
+    id=${todoId};
+  `;
+  const BeforeTodo = await db.get(BeforeQuery);
+
+  const {
+    todo = BeforeTodo.todo,
+    priority = BeforeTodo.priority,
+    status = BeforeTodo.status,
+  } = request.body;
+
+  const updateQuery = `
+  UPDATE 
+    todo
+  SET 
+    todo='${todo}',
+    priority='${priority}',
+    status='${status}'
+  WHERE
+    id=${todoId};`;
+  await db.run(updateQuery);
+  response.send(`'${updateColumn} Updated'`);
 });
+
+//API 5
+
+app.delete("/todos/:todoId/", async (request, response) => {
+  const { todoId } = request.params;
+  const deleteQuery = `DELETE FROM todo WHERE id=${todoId};`;
+  await db.run(deleteQuery);
+  response.send("Todo Deleted");
+});
+
