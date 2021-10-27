@@ -1,5 +1,5 @@
 //API 1
-GET http://localhost:3000/todos/?search_q=Play
+GET http://localhost:3000/todos/2/?status=IN%20PROGRESS
 ###
 //API 2
 GET http://localhost:3000/todos/3/
@@ -9,14 +9,14 @@ POST http://localhost:3000/todos/
 Content-Type: application/json
 
 {
-  "id": 10,
+  "id":10,
   "todo": "Finalize event theme",
   "priority": "LOW",
   "status": "TO DO"
 }
 
 ### API 4
-PUT http://localhost:3000/todos/:tidoId/
+PUT http://localhost:3000/todos/3/
 Content-Type: application/json
 
 {
