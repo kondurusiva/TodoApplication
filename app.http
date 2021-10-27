@@ -4,7 +4,7 @@ GET http://localhost:3000/todos/?search_q=Play
 //API 2
 GET http://localhost:3000/todos/3/
 ###
-///API 3
+//API 3
 POST http://localhost:3000/todos/
 Content-Type: application/json
 
@@ -14,3 +14,14 @@ Content-Type: application/json
   "priority": "LOW",
   "status": "TO DO"
 }
+
+### API 4
+PUT http://localhost:3000/todos/:tidoId/
+Content-Type: application/json
+
+{
+    "status":"DONE"
+}
+
+### API 5
+DELETE  http://localhost:3000/todos/:todoId/
