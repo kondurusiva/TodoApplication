@@ -116,13 +116,13 @@ app.put(`/todos/:todoId/`, async (request, response) => {
   const requestBody = request.body;
   switch (true) {
     case requestBody.status !== undefined:
-      updateColumn = "Status";
+      updateColumn = "Status Updated";
       break;
     case requestBody.priority !== undefined:
-      updateColumn = "Priority";
+      updateColumn = "Priority Updated";
       break;
     case requestBody.todo !== undefined:
-      updateColumn = "Todo";
+      updateColumn = "Todo Updated";
       break;
   }
   const BeforeQuery = `
@@ -150,7 +150,7 @@ app.put(`/todos/:todoId/`, async (request, response) => {
   WHERE
     id=${todoId};`;
   await db.run(updateQuery);
-  response.send(`'${updateColumn} Updated'`);
+  response.send(updateColumn);
 });
 
 //API 5
